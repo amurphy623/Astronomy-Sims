@@ -1,3 +1,4 @@
+
 var aSlider, bSlider; //semi major & semi minor axis label
 var eLabel; //eccentricity label
 var count;
@@ -15,7 +16,7 @@ function setup() {
   //Creating radius slider
   aSliderLabel = createP("Semi Major Axis (red line)");
   aSliderLabel.position(50,0);
-  aSlider = createSlider(0, 600, 50, 0);
+  aSlider = createSlider(0, 300, 100, 0);
   aSlider.position(50,40);
   aSlider.elt.step = 10;
 
@@ -23,7 +24,7 @@ function setup() {
   //Creating semi minor axis slider
   bSliderLabel = createP("Semi Minor Axis (blue line)");
   bSliderLabel.position(50,60);
-  bSlider = createSlider(0, 400, 30, 0);
+  bSlider = createSlider(0, 300, 90, 0);
   bSlider.position(50,100);
   bSlider.elt.step = 10;
 
@@ -96,11 +97,11 @@ function draw() {
 
   //define eccentricity
   eccentricity = sqrt(1 - (((b)^2)/((a)^2)));
-  eccentricityLabel.html("Eccentricity: " + eccentricity);
+  eccentricityLabel.html("Eccentricity: " + eccentricity.toFixed(2));
 
   //Define Perihelion
   perihelion = (a*(1 - eccentricity));
-  perihelionLabel.html("Perihelion (pink dot): " + perihelion);
+  perihelionLabel.html("Perihelion (pink dot): " + perihelion.toFixed(2));
 
     //What happens when prohibited values are put in?
     if(b > a){}
@@ -108,12 +109,12 @@ function draw() {
       //Draw Perihelion
       stroke('black');
       fill('pink');
-      ellipse(width/2 + perihelion, height/2, 10, 10)
+      ellipse(width/2 + aSlider.value()/2, height/2, 10, 10)
     }
 
   //Define Aphelion
   aphelion = (a*(1 + eccentricity));
-  aphelionLabel.html("Aphelion (green dot): " + aphelion);
+  aphelionLabel.html("Aphelion (green dot): " + aphelion.toFixed(2));
 
     //What happens when prohibited values are put in?
     if(b > a){}
@@ -121,12 +122,12 @@ function draw() {
       //Draw Aphelion
       stroke('black');
       fill('green');
-      ellipse(width/2 - aphelion, height/2, 10, 10);
+      ellipse(width/2 - aSlider.value()/2, height/2, 10, 10);
     }
 
   //Define a Focal Point of the Ellipse
-  focalPoint = sqrt((a^2) + (b^2));
-  focalPointLabel.html("Focal Point (yellow dot): " + focalPoint);
+  focalPoint = sqrt((Math.pow(a,2)) - (b*b));
+  focalPointLabel.html("Focal Point (yellow dot): " + focalPoint.toFixed(2));
 
   //What happens when prohibited values are put in?
   if(b > a) {}
@@ -134,7 +135,5 @@ function draw() {
     //Draw a focal point of the ellipse
     stroke('black');
     fill('yellow');
-    ellipse(width/2 + focalPoint, height/2, 15, 15);
+    ellipse(width/2 + focalPoint/2, height/2, 5, 5);
   }
-
-}
